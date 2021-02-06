@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace DataAccess.Concrete.InMemory
 {
@@ -29,9 +30,34 @@ namespace DataAccess.Concrete.InMemory
             return _cars;
         }
 
+        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
+        {
+            return _cars;
+        }
+
         public Car GetById(int id)
         {
             return _cars.SingleOrDefault(p => p.Id == id);
+        }
+
+        public List<Car> GetCarsByBrandId(Expression<Func<Car, bool>> filter = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Car> GetCarsByBrandId(int brandId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Car> GetCarsByColorId(Expression<Func<Car, bool>> filter = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Car> GetCarsByColorId(int colorId)
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(Car car)
