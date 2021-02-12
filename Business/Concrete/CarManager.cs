@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Concrete;
 using Entities.Concrete;
 using System;
@@ -14,39 +16,62 @@ namespace Business.Concrete
         {
             _iCarDal = carDal;
         }
-        public void Add(Car car)
+        public IResult Add(Car car)
         {
+            if (car.Description.Length < 2)
+            {
+                return new ErrorResult(Messages.CarNameInvalid);
+            }
+            if (car.DailyPrice == 0)
+            {
+                return new ErrorResult(Messages.CarDailyPriceInvalid);
+            }
+
             _iCarDal.Add(car);
+            return new SuccessResult(Messages.CarAdded);
         }
 
-        public void Delete(Car car)
+        public IResult Delete(Car car)
         {
             _iCarDal.Delete(car);
+            return new SuccessResult(Messages.CarDeleted);
         }
 
-        public List<Car> GetAll()
-        {
-            return _iCarDal.GetAll(); 
-        }
-
-        public Car GetById(int id)
-        {
-            return _iCarDal.GetById(id);
-        }
-
-        public List<Car> GetCarsByBrandId(int brandId)
-        {
-            return _iCarDal.GetCarsByBrandId(brandId);
-        }
-
-        public List<Car> GetCarsByColorId(int colorId)
-        {
-            return _iCarDal.GetCarsByColorId(colorId);
-        }
-
-        public void Update(Car car)
+        public IResult Update(Car car)
         {
             _iCarDal.Update(car);
+            return new SuccessResult(Messages.CarDeleted);
         }
+
+        public IDataResult<List<Car>> GetAll()
+        {
+            if (DateTime.Now.Hour==23)
+            {
+                return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<Car>>(_iCarDal.GetAll(),Messages.CarListed); 
+        }
+
+        public IDataResult<Car> GetById(int id)
+        {
+            return new DataResult<Car>(_iCarDal.GetById(id),true);
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
+        {
+            return new DataResult<List<CarDetailDto>>(_iCarDal.GetCarDetails(),true);
+        }
+
+        public IDataResult<List<Car>> GetCarsByBrandId(int brandId)
+        {
+            return new DataResult<List<Car>>(_iCarDal.GetCarsByBrandId(brandId),true);
+        }
+
+        public IDataResult<List<Car>> GetCarsByColorId(int colorId)
+        {
+            return new DataResult<List<Car>>(_iCarDal.GetCarsByColorId(colorId),true);
+        }
+
+
     }
 }

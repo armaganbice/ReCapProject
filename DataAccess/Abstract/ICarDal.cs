@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Core.DataAccess;
 
 namespace DataAccess.Concrete
 {
@@ -9,5 +10,7 @@ namespace DataAccess.Concrete
     {
         List<Car> GetCarsByBrandId(int brandId);
         List<Car> GetCarsByColorId(int colorId);
+
+        List<CarDetailDto> GetCarDetails();
     }
 }
