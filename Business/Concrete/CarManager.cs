@@ -54,24 +54,22 @@ namespace Business.Concrete
 
         public IDataResult<Car> GetById(int id)
         {
-            return new DataResult<Car>(_iCarDal.GetById(id),true);
+            return new SuccessDataResult<Car>(_iCarDal.GetById(id),Messages.CarById);
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return new DataResult<List<CarDetailDto>>(_iCarDal.GetCarDetails(),true);
+            return new SuccessDataResult<List<CarDetailDto>>(_iCarDal.GetCarDetails(),Messages.CarListed);
         }
 
         public IDataResult<List<Car>> GetCarsByBrandId(int brandId)
         {
-            return new DataResult<List<Car>>(_iCarDal.GetCarsByBrandId(brandId),true);
+            return new SuccessDataResult<List<Car>>(_iCarDal.GetCarsByBrandId(brandId),Messages.CarListed);
         }
 
         public IDataResult<List<Car>> GetCarsByColorId(int colorId)
         {
-            return new DataResult<List<Car>>(_iCarDal.GetCarsByColorId(colorId),true);
+            return new SuccessDataResult<List<Car>>(_iCarDal.GetCarsByColorId(colorId),Messages.CarListed);
         }
-
-
     }
 }

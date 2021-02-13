@@ -17,10 +17,11 @@ namespace ConsoleUI
             Console.WriteLine("ReCapProject by Armağan Bice 31.01.2021");
             Console.WriteLine("---------------------------------------");
             // CarInMemoryMethods("Test In Memory");
-            CarEfMethods("Test Entity Framework");
+            // CarEfMethods1("Test Entity Framework");
+            CarEfMethods2("Test Entity Framework");
         }
 
-        public static void CarEfMethods(string test)
+        public static void CarEfMethods1(string test)
         {
             ICarDal CarDal = new EfCarDal(); // EfCarDal *DataAccessLayer 
             ICarService carManager = new CarManager(CarDal);
@@ -77,10 +78,10 @@ namespace ConsoleUI
             //color2.Id = 1;
             //color2.Name = "Red";
             //colorManager.Add(color2);
-            Color color5 = new Color();
-            color5.Id = 6;
-            color5.Name = "Purple";
-            colorManager.Add(color5);
+            //Color color5 = new Color();
+            //color5.Id = 6;
+            //color5.Name = "Purple";
+            //colorManager.Add(color5);
             Console.WriteLine("EF Color List");
             foreach (Color color in colorManager.GetAll().Data)
             {
@@ -117,6 +118,90 @@ namespace ConsoleUI
 
             Console.ReadLine();
         }
+
+        public static void CarEfMethods2(string test)
+        {
+            Console.WriteLine("ReCapProject by Armağan Bice 13.02.2021");
+            Console.WriteLine("---------------------------------------");
+            
+            CarRentalContext carRentalContext = new CarRentalContext();
+            IUserDal UserDal = new EfUserDal(); // EfCarDal *DataAccessLayer 
+            IUserService userManager = new UserManager(UserDal);
+            
+            //User user1 = new User();
+            //user1.FirstName = "Engin";
+            //user1.LastName = "Demiroğ";
+            //userManager.Add(user1);
+            //User user2 = new User();
+            //user2.FirstName = "Armağan";
+            //user2.LastName = "Bice";
+            //userManager.Add(user2);
+            User user3 = new User();
+            user3.Id = 3;
+            user3.FirstName = "Ahmet";
+            user3.LastName = "Kaya";
+
+            userManager.Update(user3);
+            User user4 = new User();
+            user4.Id = 4;
+            user4.FirstName = "Arda";
+            user4.LastName = "Bice";
+            userManager.Update(user4);
+            Console.WriteLine("EF User List ");
+            foreach (User user in userManager.GetAll().Data)
+            {
+                Console.WriteLine(user.Id.ToString() + "-" + user.FirstName.ToString() + " - " + user.LastName);
+            }
+
+            ICustomerDal CustomerDal = new EfCustomerDal(); // EfCarDal *DataAccessLayer 
+            ICustomerService customerManager = new CustomerManager(CustomerDal);
+            //Customer customer1 = new Customer();
+            //customer1.UserId = 1;
+            //customer1.CompanyName = "ABICE CO.";
+            //customerManager.Add(customer1);
+            //Customer customer2 = new Customer();
+            //customer2.UserId = 2;
+            //customer2.CompanyName = "SolidTeam";
+            //customerManager.Add(customer2);
+            Console.WriteLine("EF Customer List ");
+            foreach (Customer customer in customerManager.GetAll().Data)
+            {
+                Console.WriteLine(customer.Id.ToString() + "-" + customer.UserId.ToString() + " - " + customer.CompanyName);
+            }
+
+            IRentalDal RentalDal = new EfRentalDal(); // EfCarDal *DataAccessLayer 
+            IRentalService rentalManager = new RentalManager(RentalDal);
+            Rental rental1 = new Rental();
+            rental1.CarId = 1;
+            rental1.CustomerId = 1;
+            rental1.RentDate = DateTime.Now;
+            rentalManager.Add(rental1);
+            Rental rental2 = new Rental();
+            rental2.CarId = 2;
+            rental2.CustomerId = 2;
+            rental2.RentDate = DateTime.Now;
+            rentalManager.Add(rental2);
+            Console.WriteLine("EF Rental List ");
+            foreach (Rental rental in rentalManager.GetAll().Data)
+            {
+                Console.WriteLine("{0} / {1} / {2} / {3} ", rental.CarId.ToString(),rental.CustomerId.ToString(), rental.RentDate, rental.ReturnDate);
+            }
+            Console.WriteLine("EF Rental List - DTO  ");
+            foreach (RentalDetailDto rentalDetailDto in rentalManager.GetRentalDetails().Data)
+            {
+                Console.WriteLine("{0} / {1} / {2} / {3} / {4} / {5} ",
+                    rentalDetailDto.Id,
+                    rentalDetailDto.CarName.ToString(), 
+                    rentalDetailDto.FirstName,
+                    rentalDetailDto.LastName,
+                    rentalDetailDto.RentDate,
+                    rentalDetailDto.ReturnDate
+                    );
+            }
+            Console.ReadLine();
+
+        }
+
         public static void CarInMemoryMethods(string test)
         {
             //ICarDal CarDal = new InMemoryCarDal(); // InMemoryCarDal *DataAccessLayer 
