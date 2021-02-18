@@ -10,7 +10,6 @@ namespace DataAccess.Concrete
     {
         List<Car> GetCarsByBrandId(int brandId);
         List<Car> GetCarsByColorId(int colorId);
-
         List<CarDetailDto> GetCarDetails();
     }
 }

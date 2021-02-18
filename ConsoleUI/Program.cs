@@ -17,8 +17,8 @@ namespace ConsoleUI
             Console.WriteLine("ReCapProject by Armağan Bice 31.01.2021");
             Console.WriteLine("---------------------------------------");
             // CarInMemoryMethods("Test In Memory");
-            // CarEfMethods1("Test Entity Framework");
-            CarEfMethods2("Test Entity Framework");
+             CarEfMethods1("Test Entity Framework");
+            //CarEfMethods2("Test Entity Framework");
         }
 
         public static void CarEfMethods1(string test)
@@ -32,10 +32,11 @@ namespace ConsoleUI
                 Console.WriteLine(car.Description);
             }
             Car car4 = new Car();
-            car4.Id = 4;
+            //car4.Id = 4;
             car4.BrandId = 5;
             car4.ColorId = 5;
-            car4.DailyPrice = 900;
+            car4.DailyPrice = 0;
+            car4.Name = "A";
             car4.Description = "A";
             carManager.Add(car4);
             Console.WriteLine("EF Cars List");
@@ -43,7 +44,7 @@ namespace ConsoleUI
             {
                 Console.WriteLine(car.Id + " - " + car.Description);
             }
-            car4.Description = "Audi A6";
+           // car4.Description = "Audi A6";
            // carManager.Update(car4);
             CarRentalContext context = new CarRentalContext();
             Console.WriteLine("EF Cars List after Update with context.Cars");
