@@ -15,7 +15,6 @@ namespace DataAccess.Concrete.EntityFramework
             using (CarRentalContext context = new CarRentalContext())
             {
                  return context.Cars.Where(p => p.BrandId == brandId).ToList();
-                //return null;
             }
         }
 
@@ -25,7 +24,6 @@ namespace DataAccess.Concrete.EntityFramework
             using (CarRentalContext context = new CarRentalContext())
             {
                 return context.Cars.Where(p => p.ColorId == colorId).ToList();
-               // return null;
             }
         }
 
@@ -47,7 +45,6 @@ namespace DataAccess.Concrete.EntityFramework
                              };
 
                             return result.ToList();
-                // return null;
             }
         }
 

@@ -13,20 +13,23 @@ namespace Business.Constants
         public static string Listed = " listed";
         public static string ById = " by Id";
 
-        public static string CarAdded = "Car"+Added;
-        public static string CarNameInvalid = "Car Name is invalid";
-        public static string CarDailyPriceInvalid = "Car Daily Price is is invalid";
-        public static string CarDeleted = "Car"+Deleted;
-        public static string CarUpdated = "Car"+Updated;
-        public static string CarListed = "Car"+Listed;
-        public static string CarById = "Car" + ById;
+        public static string CarText = "Car";
+        public static string CarAdded = CarText+Added;
+        public static string CarDeleted = CarText+Deleted;
+        public static string CarUpdated = CarText+Updated;
+        public static string CarListed =  CarText+Listed;
+        public static string CarById =    CarText+ById;
+        public static string CarNameInvalid = CarText + " Name is invalid";
+        public static string CarDailyPriceInvalid = CarText + " Daily Price is is invalid";
 
         public static string MaintenanceTime = "Maintenance Time";
-        public static string BrandAdded = "Brand"+Added;
-        public static string BrandDeleted = "Brand"+Deleted;
-        public static string BrandUpdated = "Brand"+Updated;
-        public static string BrandListed = "Brand"+Listed;
-        public static string BrandById = "Brand"+ById;
+
+        public static string BrandText = "Brand";
+        public static string BrandAdded = BrandText+Added;
+        public static string BrandDeleted = BrandText+Deleted;
+        public static string BrandUpdated = BrandText+Updated;
+        public static string BrandListed = BrandText+Listed;
+        public static string BrandById = BrandText+ById;
 
         public static string ColorAdded = "Color"+Added;
         public static string ColorDeleted = "Color"+Deleted;
@@ -52,5 +55,14 @@ namespace Business.Constants
         public static string RentalListed = "Rental" + Listed;
         public static string RentalById = "Rental" + ById;
 
+        public static string CarImageAdded = "Car Image" + Added;
+        public static string CarImageDeleted = "Car Image" + Deleted;
+        public static string CarImageUpdated = "Car Image" + Updated;
+        public static string CarImageListed = "Car Image" + Listed;
+        public static string CarImageById = "Car Image" + ById;
+
+        public static string CarImageCarIdInvalid = "Car Image Car Id is Invalid " ;
+        public static string CarImageLimitExceeded = "Car Image Limit Exceeded";
+        public static string CarImageCountOfCarError = "Car Image Count of Car Error";
     }
 }
