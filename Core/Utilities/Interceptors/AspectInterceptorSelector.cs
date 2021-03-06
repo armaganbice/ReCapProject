@@ -8,7 +8,7 @@ namespace Core.Utilities.Interceptors
 
     public class AspectInterceptorSelector : IInterceptorSelector
     {
-        public Castle.DynamicProxy.IInterceptor[] SelectInterceptors(Type type, MethodInfo method, IInterceptor[] interceptors)
+        public IInterceptor[] SelectInterceptors(Type type, MethodInfo method, IInterceptor[] interceptors)
         {
             var classAttributes = type.GetCustomAttributes<MethodInterceptionBaseAttribute>
                 (true).ToList();

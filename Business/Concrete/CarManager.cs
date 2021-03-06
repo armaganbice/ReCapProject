@@ -9,6 +9,8 @@ using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Core.Aspects.Autofac.Caching;
+using Business.BusinessAspect.Autofac.Security;
 
 namespace Business.Concrete
 {
@@ -20,7 +22,9 @@ namespace Business.Concrete
             _iCarDal = carDal;
         }
 
+        [SecuredOperation("car.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("ICarService.Get")]
         public IResult Add(Car car)
         {
             _iCarDal.Add(car);

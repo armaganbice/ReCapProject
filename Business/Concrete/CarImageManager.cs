@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspect.Autofac.Security;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.FileHelper;
@@ -48,7 +50,10 @@ namespace Business.Concrete
         return new SuccessDataResult<List<CarImage>>(result,Messages.CarImageListed);
     }
 
-    public IResult Add(CarImage carImage, IFormFile file)
+    [SecuredOperation("carImage.add")]
+ //  [ValidationAspect(typeof(CarImageValidator))]
+    [CacheRemoveAspect("ICarService.Get")]
+        public IResult Add(CarImage carImage, IFormFile file)
     {
         var result = BusinessRules.Run(
             CheckIfCarImageCountOfCarCorrect(carImage.CarId));
