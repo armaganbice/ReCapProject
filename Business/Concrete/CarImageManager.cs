@@ -38,27 +38,60 @@ namespace Business.Concrete
         return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.CarId == id),Messages.CarImageListed);
     }
 
+    public IDataResult<List<CarImage>> GetListByCarId(int id)
+    {
+            var Result = new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll().Where(c => c.CarId == id).ToList());
+            return Result;
+    }
+
+
     public IDataResult<List<CarImage>> GetAll()
     {
         return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
     }
 
-    public IDataResult<List<CarImage>> GetImagesByCarId(int carId)
-    {
-        var result = _carImageDal.GetAll(c => c.CarId == carId);
-        IfCarImageOfCarNotExistsAddDefault(result, carId);
-        return new SuccessDataResult<List<CarImage>>(result,Messages.CarImageListed);
-    }
+    //public IDataResult<List<CarImage>> GetImagesByCarId(int carId)
+    //{
+    //    var result = new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == carId));
+    //    IfCarImageOfCarNotExistsAddDefault(result, carId);
+    //    return result;
+    //}
 
-    [SecuredOperation("carImage.add")]
- //  [ValidationAspect(typeof(CarImageValidator))]
-    [CacheRemoveAspect("ICarService.Get")]
+      
+        public IDataResult<List<CarImage>> GetImagesByCarId(int carId)
+        {
+            var result = _carImageDal.GetAll(c => c.CarId == carId);
+            if (result.Count == 0)
+            {
+                var defaultImage = DefaultImage(carId);
+                return new SuccessDataResult<List<CarImage>>(defaultImage.Data);
+            }
+
+            return new SuccessDataResult<List<CarImage>>(result);
+
+        }
+
+        private IDataResult<List<CarImage>> DefaultImage(int carId)
+        {
+            List<CarImage> carImages = new List<CarImage>
+            {
+                new CarImage
+                {
+                    CarId = carId, 
+                    ImagePath = ($@"{Environment.CurrentDirectory}\Images\default-car.png")
+                }
+            };
+            return new SuccessDataResult<List<CarImage>>(carImages);
+        }
+
+        //   [SecuredOperation("carImage.add")]
+        //  [ValidationAspect(typeof(CarImageValidator))]
+        //   [CacheRemoveAspect("ICarService.Get")
         public IResult Add(CarImage carImage, IFormFile file)
     {
         var result = BusinessRules.Run(
             CheckIfCarImageCountOfCarCorrect(carImage.CarId));
         if (result != null) return result;
-
         carImage.ImagePath = new FileHelperOnDisk().Add(file, CreateNewPath(file));
         carImage.Date = DateTime.Now;
         _carImageDal.Add(carImage);
@@ -90,7 +123,7 @@ namespace Business.Concrete
             {
                 CarId = carId,
                 ImagePath =
-                    $@"{Environment.CurrentDirectory}\Public\Images\default-car.png",
+                    $@"{Environment.CurrentDirectory}\Images\default-car.png",
                 Date = DateTime.Now
             };
             result.Add(defaultCarImage);
@@ -101,7 +134,7 @@ namespace Business.Concrete
     {
         var fileInfo = new FileInfo(file.FileName);
         var newPath =
-            $@"{Environment.CurrentDirectory}\Public\Images\{Guid.NewGuid()}_{DateTime.Now.Month}_{DateTime.Now.Day}_{DateTime.Now.Year}{fileInfo.Extension}";
+            $@"{Environment.CurrentDirectory}\Images\{Guid.NewGuid()}_{DateTime.Now.Month}_{DateTime.Now.Day}_{DateTime.Now.Year}{fileInfo.Extension}";
         return newPath;
     }
 
@@ -112,7 +145,18 @@ namespace Business.Concrete
         return new SuccessResult();
     }
 
+        private List<CarImage> CheckIfCarImageNull(int id)
+        {
+            var result = _carImageDal.GetAll(c => c.CarId == id).Any();
+            if (!result)
+            {
+                return new List<CarImage> { new CarImage {
+                    CarId=id,
+                    ImagePath = @"\Images\default-car.png",
+                    Date=DateTime.Now
+                } };
+            }
+            return _carImageDal.GetAll(p => p.CarId == id);
+        }
     }
-
-
 }

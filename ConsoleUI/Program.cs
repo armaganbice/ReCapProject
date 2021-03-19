@@ -61,15 +61,15 @@ namespace ConsoleUI
             }
             // Console.WriteLine("Get By Id 1 " + carManager.GetById(1).Description);
             Console.WriteLine("EF Cars List BrandId=1 ");
-            foreach (Car car in carManager.GetCarsByBrandId(1).Data)
-            {
-                Console.WriteLine(car.Id.ToString() + "-" + car.BrandId.ToString() + " - " + car.Description);
-            }
-            Console.WriteLine("EF Cars List ColorId=2 ");
-            foreach (Car car in carManager.GetCarsByColorId(2).Data)
-            {
-                Console.WriteLine(car.Id.ToString() + "-" + car.ColorId.ToString() + " - " + car.Description);
-            }
+            //foreach (Car car in carManager.GetCarsByBrandId(1).Data)
+            //{
+            //    Console.WriteLine(car.Id.ToString() + "-" + car.BrandId.ToString() + " - " + car.Description);
+            //}
+            //Console.WriteLine("EF Cars List ColorId=2 ");
+            //foreach (Car car in carManager.GetCarsByColorId(2).Data)
+            //{
+            //    Console.WriteLine(car.Id.ToString() + "-" + car.ColorId.ToString() + " - " + car.Description);
+            //}
             IColorDal colorDal = new EfColorDal();
             ColorManager colorManager = new ColorManager(colorDal);
             //Color color6 = new Color();
@@ -113,10 +113,10 @@ namespace ConsoleUI
                 Console.WriteLine(brand.Id.ToString() + " - " + brand.Name);
             }
 
-            foreach (CarDetailDto carDetailDto in carManager.GetCarDetails().Data)
-            {
-                Console.WriteLine("{0} / {1} / {2} / {3} ", carDetailDto.CarName.ToString() ,carDetailDto.BrandName,carDetailDto.ColorName,carDetailDto.DailyPrice);
-            }
+            //foreach (CarDetailDto carDetailDto in carManager.GetCarDetails().Data)
+            //{
+            //    Console.WriteLine("{0} / {1} / {2} / {3} ", carDetailDto.CarName.ToString() ,carDetailDto.BrandName,carDetailDto.ColorName,carDetailDto.DailyPrice);
+            //}
 
             Console.ReadLine();
         }

@@ -43,12 +43,12 @@ namespace WebAPI.Controllers
         {
             var result = _carImageService.GetImagesByCarId(id);
             if (result.Success) return Ok(result);
-
+           
             return BadRequest(result);
         }
 
         [HttpPost("add")]
-        public IActionResult Add([FromForm]CarImage carImage, [FromForm(Name = "Image")]IFormFile file)
+        public IActionResult Add([FromForm] CarImage carImage, [FromForm(Name = "Image")]IFormFile file)
         {
             var result = _carImageService.Add(carImage, file);
             if (result.Success) return Ok(result);

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using Core.Aspects.Autofac.Caching;
 using Business.BusinessAspect.Autofac.Security;
+using DataAccess.Concrete.EntityFramework;
 
 namespace Business.Concrete
 {
@@ -57,19 +58,32 @@ namespace Business.Concrete
             return new SuccessDataResult<Car>(_iCarDal.GetById(id),Messages.CarById);
         }
 
+        public IDataResult<List<CarDetailDto>> GetCarById(int id)
+        {
+            var result = new SuccessDataResult<List<CarDetailDto>>(_iCarDal.GetCarById(id), Messages.CarById);
+            ICarImageDal carImageDal = new EfCarImageDal();
+            //ICarImageService carimagemanager = new CarImageManager(carImageDal);
+            //List<CarImage> carimages = carimagemanager.GetImagesByCarId(id);
+            //result.Data.CarImages = carimages;
+            return result;
+        }
+
+
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
             return new SuccessDataResult<List<CarDetailDto>>(_iCarDal.GetCarDetails(),Messages.CarListed);
         }
 
-        public IDataResult<List<Car>> GetCarsByBrandId(int brandId)
+        public IDataResult<List<CarDetailDto>> GetCarsByBrandId(int brandId)
         {
-            return new SuccessDataResult<List<Car>>(_iCarDal.GetCarsByBrandId(brandId),Messages.CarListed);
+            return new SuccessDataResult<List<CarDetailDto>>(_iCarDal.GetCarsByBrandId(brandId),Messages.CarListed);
         }
 
-        public IDataResult<List<Car>> GetCarsByColorId(int colorId)
+        public IDataResult<List<CarDetailDto>> GetCarsByColorId(int colorId)
         {
-            return new SuccessDataResult<List<Car>>(_iCarDal.GetCarsByColorId(colorId),Messages.CarListed);
+            return new SuccessDataResult<List<CarDetailDto>>(_iCarDal.GetCarsByColorId(colorId),Messages.CarListed);
         }
+
+       
     }
 }

@@ -15,9 +15,11 @@ namespace WebAPI.Controllers
     public class CarsController : ControllerBase
     {
         ICarService _carService;
-        public CarsController(ICarService carService)
+        ICarImageService _carImageService;
+        public CarsController(ICarService carService,ICarImageService carImageService)
         {
             _carService = carService;
+            _carImageService = carImageService;
         }
 
         [HttpGet("GetAll")]
@@ -41,6 +43,42 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+        [HttpGet("GetCarById")]
+        public IActionResult GetCarById(int id)
+        {
+            var result = _carService.GetCarById(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("GetCarWithImagesById")]
+        public IActionResult GetCarWithİmagesById(int id)
+        {
+            var result = _carService.GetCarById(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+
+        [HttpGet("GetCarDetails")]
+        public IActionResult GetCarDetails()
+        {
+            var result = _carService.GetCarDetails();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+
 
         [HttpGet("GetCarsByBrandId")]
         public IActionResult GetCarsByBrandId(int id)

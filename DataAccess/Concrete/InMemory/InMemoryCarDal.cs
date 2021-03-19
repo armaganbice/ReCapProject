@@ -50,22 +50,27 @@ namespace DataAccess.Concrete.InMemory
             throw new NotImplementedException();
         }
 
-        public List<Car> GetCarsByBrandId(Expression<Func<Car, bool>> filter = null)
+        public List<CarDetailDto> GetCarsByBrandId(Expression<Func<Car, bool>> filter = null)
         {
             throw new NotImplementedException();
         }
 
-        public List<Car> GetCarsByBrandId(int brandId)
+        public List<CarDetailDto> GetCarsByBrandId(int brandId)
         {
             throw new NotImplementedException();
         }
 
-        public List<Car> GetCarsByColorId(Expression<Func<Car, bool>> filter = null)
+        public List<CarDetailDto> GetCarsByColorId(Expression<Func<Car, bool>> filter = null)
         {
             throw new NotImplementedException();
         }
 
-        public List<Car> GetCarsByColorId(int colorId)
+        public List<CarDetailDto> GetCarsByColorId(int colorId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public CarDetailDto GetCarById(int id)
         {
             throw new NotImplementedException();
         }
@@ -77,6 +82,11 @@ namespace DataAccess.Concrete.InMemory
             _car.BrandId     = car.BrandId;
             _car.ColorId     = car.ColorId;
             _car.DailyPrice  = car.DailyPrice;
+        }
+
+        List<CarDetailDto> ICarDal.GetCarById(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

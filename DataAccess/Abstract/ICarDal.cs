@@ -8,8 +8,9 @@ namespace DataAccess.Concrete
 {
     public interface ICarDal : IEntityRepository<Car>
     {
-        List<Car> GetCarsByBrandId(int brandId);
-        List<Car> GetCarsByColorId(int colorId);
+        List<CarDetailDto> GetCarsByBrandId(int brandId);
+        List<CarDetailDto> GetCarsByColorId(int colorId);
         List<CarDetailDto> GetCarDetails();
+        List<CarDetailDto> GetCarById(int id);
     }
 }

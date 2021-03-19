@@ -15,11 +15,13 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -37,6 +39,7 @@ namespace WebAPI
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddCors();
 			services.AddControllers();
 			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 			var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
@@ -64,10 +67,28 @@ namespace WebAPI
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
+			app.UseStaticFiles();// For the wwwroot folder
+
+			app.UseStaticFiles(new StaticFileOptions
+			{
+				FileProvider = new PhysicalFileProvider(
+							Path.Combine(Directory.GetCurrentDirectory(), "Images")),
+				RequestPath = "/Images"
+			});
+			//Enable directory browsing
+			app.UseDirectoryBrowser(new DirectoryBrowserOptions
+			{
+				FileProvider = new PhysicalFileProvider(
+							Path.Combine(Directory.GetCurrentDirectory(), "Images")),
+				RequestPath = "/Images"
+			});
+			
+
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
 			}
+			app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
 			app.UseHttpsRedirection();
 
